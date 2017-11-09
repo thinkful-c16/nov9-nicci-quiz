@@ -81,10 +81,6 @@ const STORE =
   score: 0
 };
 
-/*
-https://opentdb.com/api.php?amount=10&category=18&type=multiple
-*/
-
 function getToken(){
   $.getJSON('https://opentdb.com/api_token.php?command=request', saveToken);
 }
@@ -134,10 +130,12 @@ function handleStartPage(){
 
 function generateStartPage(){
   return `
-    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur accusamus explicabo quae natus consequatur odio expedita est, quod eum amet quasi. Deleniti vitae consequatur beatae porro. Culpa obcaecati pariatur quae!</p>
+    <p>Think you're a pretty smart cookie, huh? Well, step right up and test your knowledge.</p>
+    <p>Choose from 'General Knowledge' or a myriad of other categories. Select the number of questions you'd like to answer and just click the 'Start Quiz' button. By the way, you need a score of 70% or more to pass...just fyi!</p>
+    
     <div class="questNumber-wrapper">
       <label for="questNumber">How many questions would you like?</label>
-      <input type="text" name="questNumber" id="questNumber" class="js-questNumber">
+      <input type="text" name="questNumber" id="questNumber" class="js-questNumber" placeholder="10">
     </div>
     <div class="questCategory-wrapper">
       <label for="questCategory">Which category would you like?</label>
@@ -250,7 +248,7 @@ function addQuestionsToStore(QuestionsArr){
 }
 
 function handleQuestions(storeData){
-  console.log(storeData);
+  //console.log(storeData);
   const html = generateQuestions(storeData.questions, storeData.currentQuestion);
   return renderHTML(html);
 }
@@ -303,8 +301,12 @@ function handleSubmitAnswer(){
 function handleStartQuizBtn(){
   $('form').on('click', '.btnStartQuiz', function(event){
     event.preventDefault();
-    const noOfQuestions = $('.js-questNumber').val();
-    const categoryId = $('.js-questCategory').val();
+    let noOfQuestions  = 0;
+    let categoryId = 0;
+
+    $('.js-questNumber').val() !== '' ? noOfQuestions = $('.js-questNumber').val() : noOfQuestions = 10;
+    $('.js-questCategory').val() !== 'Select One...' ? categoryId = $('.js-questCategory').val() : categoryId = 9;
+    
     getQuestions(noOfQuestions, categoryId);
   });
 }
