@@ -113,9 +113,15 @@ function generateCategories(responseCategories){
 
 function populateSelectWithCategories(categories){
   let selectHTML = categories.map(function(category){
-    return `
-     <option value="${category.id}">${category.name}</option>
-     `;
+    if(category.name === 'General Knowledge'){
+      return `
+      <option value="${category.id}" selected> ${category.name} </option>
+      `;
+    }else{
+      return `
+      <option value="${category.id}"> ${category.name} </option>
+      `;
+    }
   });
   selectHTML = selectHTML.join('');
   $('.js-questCategory').append(selectHTML);
@@ -131,7 +137,8 @@ function handleStartPage(){
 function generateStartPage(){
   return `
     <p>Think you're a pretty smart cookie, huh? Well, step right up and test your knowledge.</p>
-    <p>Choose from 'General Knowledge' or a myriad of other categories. Select the number of questions you'd like to answer and just click the 'Start Quiz' button. By the way, you need a score of 70% or more to pass...just fyi!</p>
+    <p>Choose from 'General Knowledge' or a myriad of other categories. Select the number of questions you'd like to answer and just click the 'Start Quiz' button.</p>
+    <p>By the way, you need a score of 70% or more to pass...just fyi!</p>
     
     <div class="questNumber-wrapper">
       <label for="questNumber">How many questions would you like?</label>
@@ -153,7 +160,7 @@ function generateQuestions(currQuestionArr, questionIndex){
   const currentQuestionObj = currQuestionArr[questionIndex];
   //console.log(currentQuestionObj);
   return `
-    <div class="placeAndScore hidden">
+    <div class="placeAndScore">
         <div id="placeInQuiz">Question ${questionIndex + 1} out of ${currQuestionArr.length}</div>
         <div id="scoreInQuiz">You've answered ${STORE.score} questions correctly.</div>
     </div>
@@ -185,8 +192,10 @@ function generateRightFeedback(currQuestionArr, questionIndex){
 
   return `
         <div class="feedBack">
+          <div class="placeAndScore">
             <div id="placeInQuiz">Question ${questionIndex + 1} out of ${currQuestionArr.length}</div>
             <div id="scoreInQuiz">You've answered ${STORE.score} questions correctly.</div>
+          </div>
             <p>That is correct! You rock!</p>
             <button class="btnNextQuestion">Go to the next Question</button>
         </div>
@@ -197,9 +206,11 @@ function generateWrongFeedback(currQuestionArr, questionIndex){
   
   return `
     <div class="feedBack">
-        <div id="placeInQuiz">Question ${questionIndex + 1} out of ${currQuestionArr.length}</div>
-        <div id="scoreInQuiz">You've answered ${STORE.score} correctly.</div>
-        <p>Sorry, that's not it :( The correct answer was ${STORE.questions[questionIndex].correctAnswer}.</p>
+    <div class="placeAndScore">
+      <div id="placeInQuiz">Question ${questionIndex + 1} out of ${currQuestionArr.length}</div>
+      <div id="scoreInQuiz">You've answered ${STORE.score} questions correctly.</div>
+    </div>
+        <p>Sorry, that's not it :( </p><p>The correct answer was ${STORE.questions[questionIndex].correctAnswer}.</p>
         <button class="btnNextQuestion">Go to the next Question</button>
     </div>
     `;
@@ -215,7 +226,7 @@ function generatePassResultPage(){
 
 function generateFailResultPage(){
   return `
-  <h2>Sorry, you need a score of 70% or more to pass! Try again!</h2>
+  <h2>Nah! Sorry, you didn't pass. Try again soon!</h2>
   <p>Your score was ${STORE.score/STORE.questions.length*100}%.</p>     
   <button class="startNewQuiz">Start New Quiz</button>
   `;
@@ -226,7 +237,7 @@ function renderHTML(strQuestion){
 }
 
 function getQuestions(noOfQuestions, categoryId){
-  $.getJSON(`https://opentdb.com/api.php?amount=${noOfQuestions}&category=${categoryId}&type=multiple`, addQuestionsToStore);  
+  $.getJSON(`https://opentdb.com/api.php?amount=${noOfQuestions}&category=${categoryId}&type=multiple&token=${SESSION_TOKEN}`, addQuestionsToStore);  
 }
 
 function addQuestionsToStore(QuestionsArr){
