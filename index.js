@@ -137,8 +137,8 @@ function handleStartPage(){
 function generateStartPage(){
   return `
     <p>Think you're a pretty smart cookie, huh? Well, step right up and test your knowledge.</p>
-    <p>Choose from 'General Knowledge' or a myriad of other categories. Select the number of questions you'd like to answer and just click the 'Start Quiz' button.</p>
-    <p>By the way, you need a score of 70% or more to pass...just fyi!</p>
+    <p>Simply enter the number of questions you'd like to answer, then choose from 'General Knowledge' or a myriad of other fun categories.</p>
+    <p>By the way, you need a score of 70% or more to pass. Just fyi...so they'll be no surprises!</p>
     
     <div class="questNumber-wrapper">
       <label for="questNumber">How many questions would you like?</label>
@@ -150,7 +150,7 @@ function generateStartPage(){
         <option value="Select One...">Select One</option>
       </select>
     </div>
-    <button class="btnStartQuiz">Start Quiz</button>
+    <button class="btnStartQuiz">Let's Get It Started</button>
     `;
 }
 
