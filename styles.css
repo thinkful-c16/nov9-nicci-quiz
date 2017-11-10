@@ -14,11 +14,11 @@ body {
 
 h1,h2,h3,h4,h5,h6 {
     font-family: Lobster, serif;
-    color: #A5CC83;
+    color: #405E26;
 }
 
 h2 {
-    color: #888;
+    color: #595959;
 }
 
 svg {
@@ -31,7 +31,7 @@ svg {
 }
 
 main {
-    background: white;
+    background: rgba(255,255,255, 0.9);
     margin: 3em auto 0 auto;
     width: 70%;
     max-width: 70%;
@@ -41,9 +41,9 @@ main {
 }
 
 button {
-    color: #A5CC83;
+    color: #405E26;
     padding: 10px 50px;
-    border: 1px solid #A5CC83;
+    border: 1px solid #405E26;
     background: none;
     font-size: .8em;
     margin: 35px 0;
